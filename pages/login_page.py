@@ -29,25 +29,28 @@ class LoginPage:
     async def error_message_should_be_visible(self)-> None:
         await expect(self.error_message).to_be_visible(), "The message container is not visible"
     
-    async def error_icons_should_be_visible_and_should_be(self, number_of_expected_icons):
+    async def error_message_should_be(self, expected_error_message)-> None:
+        actual_error_message = self.error_message
+        await expect(actual_error_message).to_have_text(expected_error_message), f"The expected error message was {expected_error_message}, but the obtained is {actual_error_message}"
+    
+    async def error_icons_should_be_visible_and_should_be(self, number_of_expected_icons: int) -> None:
         actual_amount = await self.error_icons.count()
-        await expect(self.error_icons).to_be_visible()
-        assert actual_amount == number_of_expected_icons, f"The expected number of icons was {number_of_expected_icons}, but the obtained is {actual_amount}"
+        if actual_amount == number_of_expected_icons:
+            for i in range(actual_amount):
+                assert await self.error_icons.nth(i).is_visible(), f"El ícono {i} no está visible"
 
-    async def close_error_message(self):
+    async def close_error_message(self) -> None:
         await self.error_button.click()
 
-    async def error_icons_and_cointainer_should_not_be_visible(self, number_of_expected_icons):
-        await expect(self.error_icons).not_to_be_visible()
-        await expect(self.error_message).not_to_be_visible()
+    async def error_icons_and_cointainer_should_not_be_visible(self)->None:
+        for i in range(await self.error_icons.count()):
+                assert not await self.error_icons.nth(i).is_visible() , f"El ícono {i} sigue visible"
+        await expect(self.error_message).to_be_visible()
 
 
-    async def error_icons_should_be_visible_and_should_be(self, number_of_expected_icons):
-        actual_amount = await self.error_icons.count()
-        await expect(self.error_icons).to_be_visible()
-        assert actual_amount == number_of_expected_icons, f"The expected number of icons was {number_of_expected_icons}, but the obtained is {actual_amount}"
 
+        
 
-    async def url_is(self, expected_url)->None:
+    async def should_be_redirected_to(self, expected_url: str)->None:
         actual_url = self.page.url
-        assert await self.page.url == expected_url, f"The expected url was {expected_url}, but the actual url is {actual_url}"
+        assert self.page.url == expected_url, f"The expected url was {expected_url}, but the actual url is {actual_url}"
