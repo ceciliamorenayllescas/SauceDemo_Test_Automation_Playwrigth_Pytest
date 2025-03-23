@@ -8,5 +8,10 @@ login_data = CsvParser("data/login_cases.csv")
 
 
 @pytest.mark.asyncio(loop_scope= "session")
-async def test_navigate_to_login_page(page, base_page):
+async def test_navigate_to_login_page(page, base_page, login_page):
+    #When I go to the base page
     await base_page.go_to_base_page()
+    #Then the browser title is Swag Labs
+    await login_page.browser_title_should_be("Swag Labs")
+    #And the inner title of the page body is also "Swag Labs"
+    await login_page.inner_title_should_be("Swag Labs")

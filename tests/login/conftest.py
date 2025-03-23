@@ -1,6 +1,7 @@
 import pytest
 from utilities.browser_manager import BrowserManager
 from pages.base_page import BasePage
+from pages.login_page import LoginPage
 
 @pytest.fixture(scope="session")
 async def browser():
@@ -22,6 +23,10 @@ async def page(context):
     await page.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 async def base_page(page):
     return BasePage(page)
+
+@pytest.fixture(scope="function")
+async def login_page(page):
+    return LoginPage(page)
