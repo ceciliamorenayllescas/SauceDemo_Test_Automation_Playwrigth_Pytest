@@ -9,3 +9,4 @@ TC-7;Should produce error message for locked out user;locked_out_user;secret_sau
 TC-8;Blank username should produce error message;;demo_password;Epic sadface: Username is required
 TC-9;Blank password should produce error message;demo_username;;Epic sadface: Password is required
 TC-10;Blank username and blank password should produce error message;;;Epic sadface: Username is required
+TC-11;Close error message should hide error icon and error container;;;Epic sadface: Username is required
