@@ -47,10 +47,6 @@ class LoginPage:
                 assert not await self.error_icons.nth(i).is_visible() , f"El ícono {i} sigue visible"
         await expect(self.error_message).to_be_visible()
 
-
-
-        
-
     async def should_be_redirected_to(self, expected_url: str)->None:
         actual_url = self.page.url
         assert self.page.url == expected_url, f"The expected url was {expected_url}, but the actual url is {actual_url}"
